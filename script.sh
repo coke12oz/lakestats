@@ -301,5 +301,5 @@ LINE1:trend2$RAWCOLOUR5:"3 Feet average  \r" \
 LINE1:trend5$TRENDCOLOUR:"6 Feet average\l"
 
 DATE=$(date +"%Y%m%d_%H%M")
-raspistill -vf -hf -q 10 -o /opt/lakestats/camera/$DATE.jpg
+raspistill -q 10 -o /opt/lakestats/camera/$DATE.jpg
 ln -sf /opt/lakestats/camera/$DATE.jpg /opt/lakestats/img/current.jpg
