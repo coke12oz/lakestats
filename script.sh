@@ -44,17 +44,17 @@ DAWN=$(($DAWNHR * 3600 + $DAWNMIN * 60))
 ############################
 #hour
 rrdtool graph $IMGPATH/hour.png --start -6h --end now \
--v "Last 6 hours (°C)" \
+-v "Last 6 hours (°F)" \
 --full-size-mode \
 --width=700 --height=400 \
 --slope-mode \
 --color=SHADEB#9999CC \
---watermark="© Bart Bania - 2014" \
-DEF:temp1=$RRDPATH/$RRDFILE:a:AVERAGE \
+--watermark="© Dan Shnowske - 2016" \
+DEF:temp1=$RRDPATH/$RRDFILE:b:AVERAGE \
 DEF:temp2=$RRDPATH/$RRDFILE:d:AVERAGE \
 DEF:temp3=$RRDPATH/$RRDFILE:c:AVERAGE \
 DEF:temp4=$RRDPATH/$RRDFILE:e:AVERAGE \
-DEF:temp5=$RRDPATH/$RRDFILE:b:AVERAGE \
+DEF:temp5=$RRDPATH/$RRDFILE:a:AVERAGE \
 CDEF:nightplus=LTIME,86400,%,$SUNR,LT,INF,LTIME,86400,%,$SUNS,GT,INF,UNKN,temp1,*,IF,IF \
 CDEF:nightminus=LTIME,86400,%,$SUNR,LT,NEGINF,LTIME,86400,%,$SUNS,GT,NEGINF,UNKN,temp1,*,IF,IF \
 AREA:nightplus#E0E0E0 \
@@ -64,45 +64,45 @@ CDEF:dawntilldusk=LTIME,86400,%,$DAWN,LT,NEGINF,LTIME,86400,%,$DUSK,GT,NEGINF,UN
 AREA:dusktilldawn#CCCCCC \
 AREA:dawntilldusk#CCCCCC \
 COMMENT:"  Location         Last        Avg\l" \
-LINE2:temp2$RAWCOLOUR2:"Outside(East)" \
-GPRINT:temp2:LAST:"%5.1lf °C" \
-GPRINT:temp2:AVERAGE:"%5.1lf °C\l" \
+LINE2:temp2$RAWCOLOUR2:"Outside(Air)" \
+GPRINT:temp2:LAST:"%5.1lf °F" \
+GPRINT:temp2:AVERAGE:"%5.1lf °F\l" \
+LINE2:temp4$RAWCOLOUR4:"Humidity    " \
+GPRINT:temp4:LAST:"%5.1lf  %%" \
+GPRINT:temp4:AVERAGE:"%5.1lf  %%\l" \
 COMMENT:"\t\t\t\t\t\t---------------------------\l" \
-LINE2:temp4$RAWCOLOUR4:"Main Room    " \
-GPRINT:temp4:LAST:"%5.1lf °C" \
-GPRINT:temp4:AVERAGE:"%5.1lf °C\l" \
+LINE1:temp5$RAWCOLOUR5:"Surface      " \
+GPRINT:temp5:LAST:"%5.1lf °F" \
+GPRINT:temp5:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
 COMMENT:"Dawn\:    $DAWNHR\:$DAWNMIN\r" \
-LINE1:temp5$RAWCOLOUR5:"Hall         " \
-GPRINT:temp5:LAST:"%5.1lf °C" \
-GPRINT:temp5:AVERAGE:"%5.1lf °C\l" \
+LINE1:temp1$RAWCOLOUR:"3 feet       " \
+GPRINT:temp1:LAST:"%5.1lf °F" \
+GPRINT:temp1:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
 COMMENT:"Sunrise\: $SUNRISEHR\:$SUNRISEMIN\r" \
-LINE1:temp1$RAWCOLOUR:"Water Pipe   " \
-GPRINT:temp1:LAST:"%5.1lf °C" \
-GPRINT:temp1:AVERAGE:"%5.1lf °C\l" \
+LINE1:temp3$RAWCOLOUR3:"6 feet       " \
+GPRINT:temp3:LAST:"%5.1lf °F" \
+GPRINT:temp3:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
 COMMENT:"Sunset\:  $SUNSETHR\:$SUNSETMIN\r" \
-LINE1:temp3$RAWCOLOUR3:"Server Fan   " \
-GPRINT:temp3:LAST:"%5.1lf °C" \
-GPRINT:temp3:AVERAGE:"%5.1lf °C\l" \
+HRULE:0#66CCFF:"freezing\l" \
 COMMENT:"\u" \
-COMMENT:"Dusk\:    $DUSKHR\:$DUSKMIN\r" \
-HRULE:0#66CCFF:"freezing\l"
+COMMENT:"Dusk\:    $DUSKHR\:$DUSKMIN\r" 
 
 #day
 rrdtool graph $IMGPATH/day.png --start -1d --end now \
--v "Last day (°C)" \
+-v "Last day (°F)" \
 --full-size-mode \
 --width=700 --height=400 \
 --slope-mode \
 --color=SHADEA#9999CC \
---watermark="© Bart Bania - 2014" \
-DEF:temp1=$RRDPATH/$RRDFILE:a:AVERAGE \
+--watermark="© Dan Shnowske - 2016" \
+DEF:temp1=$RRDPATH/$RRDFILE:b:AVERAGE \
 DEF:temp2=$RRDPATH/$RRDFILE:d:AVERAGE \
 DEF:temp3=$RRDPATH/$RRDFILE:c:AVERAGE \
 DEF:temp4=$RRDPATH/$RRDFILE:e:AVERAGE \
-DEF:temp5=$RRDPATH/$RRDFILE:b:AVERAGE \
+DEF:temp5=$RRDPATH/$RRDFILE:a:AVERAGE \
 CDEF:trend1=temp4,21600,TREND \
 CDEF:trend2=temp5,21600,TREND \
 CDEF:trend3=temp1,21600,TREND \
@@ -115,45 +115,45 @@ CDEF:dawntilldusk=LTIME,86400,%,$DAWN,LT,NEGINF,LTIME,86400,%,$DUSK,GT,NEGINF,UN
 AREA:dusktilldawn#CCCCCC \
 AREA:dawntilldusk#CCCCCC \
 COMMENT:"  Location         Last        Avg\l" \
-LINE2:temp2$RAWCOLOUR2:"Outside(East)" \
-GPRINT:temp2:LAST:"%5.1lf °C" \
-GPRINT:temp2:AVERAGE:"%5.1lf °C\l" \
+LINE2:temp2$RAWCOLOUR2:"Outside(Air)" \
+GPRINT:temp2:LAST:"%5.1lf °F" \
+GPRINT:temp2:AVERAGE:"%5.1lf °F\l" \
+LINE2:temp4$RAWCOLOUR4:"Humidity    " \
+GPRINT:temp4:LAST:"%5.1lf  %%" \
+GPRINT:temp4:AVERAGE:"%5.1lf  %%\l" \
 COMMENT:"\t\t\t\t\t\t---------------------------\l" \
-LINE2:temp4$RAWCOLOUR4:"Main Room    " \
-GPRINT:temp4:LAST:"%5.1lf °C" \
-GPRINT:temp4:AVERAGE:"%5.1lf °C\l" \
+LINE1:temp5$RAWCOLOUR5:"Surface      " \
+GPRINT:temp5:LAST:"%5.1lf °F" \
+GPRINT:temp5:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
 COMMENT:"Dawn\:    $DAWNHR\:$DAWNMIN\r" \
-LINE1:temp5$RAWCOLOUR5:"Hall         " \
-GPRINT:temp5:LAST:"%5.1lf °C" \
-GPRINT:temp5:AVERAGE:"%5.1lf °C\l" \
+LINE1:temp1$RAWCOLOUR:"3 feet       " \
+GPRINT:temp1:LAST:"%5.1lf °F" \
+GPRINT:temp1:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
 COMMENT:"Sunrise\: $SUNRISEHR\:$SUNRISEMIN\r" \
-LINE1:temp1$RAWCOLOUR:"Water Pipe   " \
-GPRINT:temp1:LAST:"%5.1lf °C" \
-GPRINT:temp1:AVERAGE:"%5.1lf °C\l" \
+LINE1:temp3$RAWCOLOUR3:"6 feet       " \
+GPRINT:temp3:LAST:"%5.1lf °F" \
+GPRINT:temp3:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
 COMMENT:"Sunset\:  $SUNSETHR\:$SUNSETMIN\r" \
-LINE1:temp3$RAWCOLOUR3:"Server Fan   " \
-GPRINT:temp3:LAST:"%5.1lf °C" \
-GPRINT:temp3:AVERAGE:"%5.1lf °C\l" \
+HRULE:0#66CCFF:"freezing\l" \
 COMMENT:"\u" \
-COMMENT:"Dusk\:    $DUSKHR\:$DUSKMIN\r" \
-HRULE:0#66CCFF:"freezing\l"
+COMMENT:"Dusk\:    $DUSKHR\:$DUSKMIN\r"
 
 #week
 rrdtool graph $IMGPATH/week.png --start -1w \
 --full-size-mode \
--v "Last week (°C)" \
+-v "Last week (°F)" \
 --width=700 --height=400 \
 --slope-mode \
 --color=SHADEB#9999CC \
---watermark="© Bart Bania - 2014" \
-DEF:temp1=$RRDPATH/$RRDFILE:a:AVERAGE \
+--watermark="© Dan Shnowske - 2016" \
+DEF:temp1=$RRDPATH/$RRDFILE:b:AVERAGE \
 DEF:temp2=$RRDPATH/$RRDFILE:d:AVERAGE \
 DEF:temp3=$RRDPATH/$RRDFILE:c:AVERAGE \
 DEF:temp4=$RRDPATH/$RRDFILE:e:AVERAGE \
-DEF:temp5=$RRDPATH/$RRDFILE:b:AVERAGE \
+DEF:temp5=$RRDPATH/$RRDFILE:a:AVERAGE \
 CDEF:nightplus=LTIME,86400,%,$SUNR,LT,INF,LTIME,86400,%,$SUNS,GT,INF,UNKN,temp1,*,IF,IF \
 CDEF:nightminus=LTIME,86400,%,$SUNR,LT,NEGINF,LTIME,86400,%,$SUNS,GT,NEGINF,UNKN,temp1,*,IF,IF \
 AREA:nightplus#E0E0E0 \
@@ -163,113 +163,125 @@ CDEF:dawntilldusk=LTIME,86400,%,$DAWN,LT,NEGINF,LTIME,86400,%,$DUSK,GT,NEGINF,UN
 AREA:dusktilldawn#CCCCCC \
 AREA:dawntilldusk#CCCCCC \
 COMMENT:"  Location         Last        Avg\l" \
-COMMENT:"\u" \
-COMMENT:"Location         Last        Avg  \r" \
-LINE2:temp2$RAWCOLOUR2:"Outside(East)" \
-GPRINT:temp2:LAST:"%5.1lf °C" \
-GPRINT:temp2:AVERAGE:"%5.1lf °C\l" \
+LINE2:temp2$RAWCOLOUR2:"Outside(Air)" \
+GPRINT:temp2:LAST:"%5.1lf °F" \
+GPRINT:temp2:AVERAGE:"%5.1lf °F\l" \
+LINE2:temp4$RAWCOLOUR4:"Humidity    " \
+GPRINT:temp4:LAST:"%5.1lf  %%" \
+GPRINT:temp4:AVERAGE:"%5.1lf  %%\l" \
 COMMENT:"\t\t\t\t\t\t---------------------------\l" \
-LINE2:temp4$RAWCOLOUR4:"Main Room    " \
-GPRINT:temp4:LAST:"%5.1lf °C" \
-GPRINT:temp4:AVERAGE:"%5.1lf °C\l" \
+LINE1:temp5$RAWCOLOUR5:"Surface      " \
+GPRINT:temp5:LAST:"%5.1lf °F" \
+GPRINT:temp5:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
-LINE1:temp5$RAWCOLOUR5:"Hall         " \
-GPRINT:temp5:LAST:"%5.1lf °C" \
-GPRINT:temp5:AVERAGE:"%5.1lf °C\r" \
-LINE1:temp1$RAWCOLOUR:"Water Pipe   " \
-GPRINT:temp1:LAST:"%5.1lf °C" \
-GPRINT:temp1:AVERAGE:"%5.1lf °C\l" \
+COMMENT:"Dawn\:    $DAWNHR\:$DAWNMIN\r" \
+LINE1:temp1$RAWCOLOUR:"3 feet       " \
+GPRINT:temp1:LAST:"%5.1lf °F" \
+GPRINT:temp1:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
-LINE1:temp3$RAWCOLOUR3:"Server Fan   " \
-GPRINT:temp3:LAST:"%5.1lf °C" \
-GPRINT:temp3:AVERAGE:"%5.1lf °C\r" \
-HRULE:0#66CCFF:"freezing\l"
+COMMENT:"Sunrise\: $SUNRISEHR\:$SUNRISEMIN\r" \
+LINE1:temp3$RAWCOLOUR3:"6 feet       " \
+GPRINT:temp3:LAST:"%5.1lf °F" \
+GPRINT:temp3:AVERAGE:"%5.1lf °F\l" \
+COMMENT:"\u" \
+COMMENT:"Sunset\:  $SUNSETHR\:$SUNSETMIN\r" \
+HRULE:0#66CCFF:"freezing\l" \
+COMMENT:"\u" \
+COMMENT:"Dusk\:    $DUSKHR\:$DUSKMIN\r"
 
 #month
 rrdtool graph $IMGPATH/month.png --start -1m \
--v "Last month (°C)" \
+-v "Last month (°F)" \
 --full-size-mode \
 --width=700 --height=400 \
 --slope-mode \
 --color=SHADEA#9999CC \
---watermark="© Bart Bania - 2014" \
-DEF:temp1=$RRDPATH/$RRDFILE:a:AVERAGE \
+--watermark="© Dan Shnowske - 2016" \
+DEF:temp1=$RRDPATH/$RRDFILE:b:AVERAGE \
 DEF:temp2=$RRDPATH/$RRDFILE:d:AVERAGE \
 DEF:temp3=$RRDPATH/$RRDFILE:c:AVERAGE \
 DEF:temp4=$RRDPATH/$RRDFILE:e:AVERAGE \
-DEF:temp5=$RRDPATH/$RRDFILE:b:AVERAGE \
+DEF:temp5=$RRDPATH/$RRDFILE:a:AVERAGE \
 COMMENT:"  Location         Last        Avg\l" \
-COMMENT:"\u" \
-COMMENT:"Location         Last        Avg  \r" \
-LINE2:temp2$RAWCOLOUR2:"Outside(East)" \
-GPRINT:temp2:LAST:"%5.1lf °C" \
-GPRINT:temp2:AVERAGE:"%5.1lf °C\l" \
+LINE2:temp2$RAWCOLOUR2:"Outside(Air)" \
+GPRINT:temp2:LAST:"%5.1lf °F" \
+GPRINT:temp2:AVERAGE:"%5.1lf °F\l" \
+LINE2:temp4$RAWCOLOUR4:"Humidity    " \
+GPRINT:temp4:LAST:"%5.1lf  %%" \
+GPRINT:temp4:AVERAGE:"%5.1lf  %%\l" \
 COMMENT:"\t\t\t\t\t\t---------------------------\l" \
-LINE2:temp4$RAWCOLOUR4:"Main Room    " \
-GPRINT:temp4:LAST:"%5.1lf °C" \
-GPRINT:temp4:AVERAGE:"%5.1lf °C\l" \
+LINE1:temp5$RAWCOLOUR5:"Surface      " \
+GPRINT:temp5:LAST:"%5.1lf °F" \
+GPRINT:temp5:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
-LINE1:temp5$RAWCOLOUR5:"Hall         " \
-GPRINT:temp5:LAST:"%5.1lf °C" \
-GPRINT:temp5:AVERAGE:"%5.1lf °C\r" \
-LINE1:temp1$RAWCOLOUR:"Water Pipe   " \
-GPRINT:temp1:LAST:"%5.1lf °C" \
-GPRINT:temp1:AVERAGE:"%5.1lf °C\l" \
+COMMENT:"Dawn\:    $DAWNHR\:$DAWNMIN\r" \
+LINE1:temp1$RAWCOLOUR:"3 feet       " \
+GPRINT:temp1:LAST:"%5.1lf °F" \
+GPRINT:temp1:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
-LINE1:temp3$RAWCOLOUR3:"Server Fan   " \
-GPRINT:temp3:LAST:"%5.1lf °C" \
-GPRINT:temp3:AVERAGE:"%5.1lf °C\r" \
-HRULE:0#66CCFF:"freezing\l"
+COMMENT:"Sunrise\: $SUNRISEHR\:$SUNRISEMIN\r" \
+LINE1:temp3$RAWCOLOUR3:"6 feet       " \
+GPRINT:temp3:LAST:"%5.1lf °F" \
+GPRINT:temp3:AVERAGE:"%5.1lf °F\l" \
+COMMENT:"\u" \
+COMMENT:"Sunset\:  $SUNSETHR\:$SUNSETMIN\r" \
+HRULE:0#66CCFF:"freezing\l" \
+COMMENT:"\u" \
+COMMENT:"Dusk\:    $DUSKHR\:$DUSKMIN\r"
 
 #year
 rrdtool graph $IMGPATH/year.png --start -1y \
 --full-size-mode \
--v "Last year (°C)" \
+-v "Last year (°F)" \
 --width=700 --height=400 \
 --color=SHADEB#9999CC \
 --slope-mode \
---watermark="© Bart Bania - 2014" \
-DEF:temp1=$RRDPATH/$RRDFILE:a:AVERAGE \
+--watermark="© Dan Shnowske - 2016" \
+DEF:temp1=$RRDPATH/$RRDFILE:b:AVERAGE \
 DEF:temp2=$RRDPATH/$RRDFILE:d:AVERAGE \
 DEF:temp3=$RRDPATH/$RRDFILE:c:AVERAGE \
 DEF:temp4=$RRDPATH/$RRDFILE:e:AVERAGE \
-DEF:temp5=$RRDPATH/$RRDFILE:b:AVERAGE \
+DEF:temp5=$RRDPATH/$RRDFILE:a:AVERAGE \
 COMMENT:"  Location         Last        Avg\l" \
-COMMENT:"\u" \
-COMMENT:"Location         Last        Avg  \r" \
-LINE1:temp2$RAWCOLOUR2:"Outside(East)" \
-GPRINT:temp2:LAST:"%5.1lf °C" \
-GPRINT:temp2:AVERAGE:"%5.1lf °C\l" \
+LINE2:temp2$RAWCOLOUR2:"Outside(Air)" \
+GPRINT:temp2:LAST:"%5.1lf °F" \
+GPRINT:temp2:AVERAGE:"%5.1lf °F\l" \
+LINE2:temp4$RAWCOLOUR4:"Humidity    " \
+GPRINT:temp4:LAST:"%5.1lf  %%" \
+GPRINT:temp4:AVERAGE:"%5.1lf  %%\l" \
 COMMENT:"\t\t\t\t\t\t---------------------------\l" \
-LINE1:temp4$RAWCOLOUR4:"Main Room    " \
-GPRINT:temp4:LAST:"%5.1lf °C" \
-GPRINT:temp4:AVERAGE:"%5.1lf °C\l" \
+LINE1:temp5$RAWCOLOUR5:"Surface      " \
+GPRINT:temp5:LAST:"%5.1lf °F" \
+GPRINT:temp5:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
-LINE1:temp5$RAWCOLOUR5:"Hall         " \
-GPRINT:temp5:LAST:"%5.1lf °C" \
-GPRINT:temp5:AVERAGE:"%5.1lf °C\r" \
-LINE1:temp1$RAWCOLOUR:"Water Pipe   " \
-GPRINT:temp1:LAST:"%5.1lf °C" \
-GPRINT:temp1:AVERAGE:"%5.1lf °C\l" \
+COMMENT:"Dawn\:    $DAWNHR\:$DAWNMIN\r" \
+LINE1:temp1$RAWCOLOUR:"3 feet       " \
+GPRINT:temp1:LAST:"%5.1lf °F" \
+GPRINT:temp1:AVERAGE:"%5.1lf °F\l" \
 COMMENT:"\u" \
-LINE1:temp3$RAWCOLOUR3:"Server Fan   " \
-GPRINT:temp3:LAST:"%5.1lf °C" \
-GPRINT:temp3:AVERAGE:"%5.1lf °C\r" \
-HRULE:0#66CCFF:"freezing\l"
+COMMENT:"Sunrise\: $SUNRISEHR\:$SUNRISEMIN\r" \
+LINE1:temp3$RAWCOLOUR3:"6 feet       " \
+GPRINT:temp3:LAST:"%5.1lf °F" \
+GPRINT:temp3:AVERAGE:"%5.1lf °F\l" \
+COMMENT:"\u" \
+COMMENT:"Sunset\:  $SUNSETHR\:$SUNSETMIN\r" \
+HRULE:0#66CCFF:"freezing\l" \
+COMMENT:"\u" \
+COMMENT:"Dusk\:    $DUSKHR\:$DUSKMIN\r"
 
 #averages
 rrdtool graph $IMGPATH/avg.png --start -1w \
--v "Weekly averages (°C)" \
+-v "Weekly averages (°F)" \
 --full-size-mode \
 --width=700 --height=400 \
 --slope-mode \
 --color=SHADEB#9999CC \
---watermark="© Bart Bania - 2014" \
-DEF:temp1=$RRDPATH/$RRDFILE:a:AVERAGE \
+--watermark="© Dan Shnowske - 2016" \
+DEF:temp1=$RRDPATH/$RRDFILE:b:AVERAGE \
 DEF:temp2=$RRDPATH/$RRDFILE:d:AVERAGE \
 DEF:temp3=$RRDPATH/$RRDFILE:c:AVERAGE \
 DEF:temp4=$RRDPATH/$RRDFILE:e:AVERAGE \
-DEF:temp5=$RRDPATH/$RRDFILE:b:AVERAGE \
+DEF:temp5=$RRDPATH/$RRDFILE:a:AVERAGE \
 CDEF:trend1=temp4,86400,TREND \
 CDEF:trend2=temp5,86400,TREND \
 CDEF:trend3=temp1,86400,TREND \
@@ -279,14 +291,14 @@ CDEF:nightplus=LTIME,86400,%,$SUNR,LT,INF,LTIME,86400,%,$SUNS,GT,INF,UNKN,temp1,
 CDEF:nightminus=LTIME,86400,%,$SUNR,LT,NEGINF,LTIME,86400,%,$SUNS,GT,NEGINF,UNKN,temp1,*,IF,IF \
 AREA:nightplus#CCCCCC \
 AREA:nightminus#CCCCCC \
-LINE2:trend4$RAWCOLOUR2:"Outside (East side) 6h average\l" \
+LINE2:trend4$RAWCOLOUR2:"Outside (Air) 6h average\l" \
+COMMENT:"\u" \
+LINE2:trend1$RAWCOLOUR4:"Humidity average\r" \
 COMMENT:"\t\t\t\t\t\t---------------------------\l" \
-LINE2:trend1$RAWCOLOUR4:"Main Room 6h average\l" \
+LINE1:trend3$RAWCOLOUR:"Surface average\l" \
 COMMENT:"\u" \
-LINE1:trend3$RAWCOLOUR:"Water 6h average\r" \
-LINE1:trend2$RAWCOLOUR5:"Hall 6h average\l" \
-COMMENT:"\u" \
-LINE1:trend5$TRENDCOLOUR:"Server Fan 6h average\r"
+LINE1:trend2$RAWCOLOUR5:"3 Feet average  \r" \
+LINE1:trend5$TRENDCOLOUR:"6 Feet average\l"
 
 DATE=$(date +"%Y%m%d_%H%M")
 raspistill -vf -hf -q 10 -o /opt/lakestats/camera/$DATE.jpg
