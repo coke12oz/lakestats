@@ -287,3 +287,7 @@ LINE1:trend3$RAWCOLOUR:"Water 6h average\r" \
 LINE1:trend2$RAWCOLOUR5:"Hall 6h average\l" \
 COMMENT:"\u" \
 LINE1:trend5$TRENDCOLOUR:"Server Fan 6h average\r"
+
+DATE=$(date +"%Y%m%d_%H%M")
+raspistill -vf -hf -q 10 -o /opt/lakestats/camera/$DATE.jpg
+ln -sf /opt/lakestats/camera/$DATE.jpg /opt/lakestats/img/current.jpg
